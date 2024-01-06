@@ -1,83 +1,98 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in</title>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!--<link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">-->
+    <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!--<link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">-->
+    <link rel="stylesheet" href="{{asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!--<link rel="stylesheet" href="../../dist/css/adminlte.min.css?v=3.2.0">-->
+    <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css?v=3.2.0')}}">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script nonce="c3e08318-c204-4fd1-8dc9-af04f9dabebf">
+        (function(w, d) {
+            ! function(dp, dq, dr, ds) {
+                dp[dr] = dp[dr] || {};
+                dp[dr].executed = [];
+                dp.zaraz = {
+                    deferred: [],
+                    listeners: []
+                };
+                dp.zaraz.q = [];
+                dp.zaraz._f = function(dt) {
+                    return async function() {
+                        var du = Array.prototype.slice.call(arguments);
+                        dp.zaraz.q.push({
+                            m: dt,
+                            a: du
+                        })
+                    }
+                };
+                for (const dv of ["track", "set", "debug"]) dp.zaraz[dv] = dp.zaraz._f(dv);
+                dp.zaraz.init = () => {
+                    var dw = dq.getElementsByTagName(ds)[0],
+                        dx = dq.createElement(ds),
+                        dy = dq.getElementsByTagName("title")[0];
+                    dy && (dp[dr].t = dq.getElementsByTagName("title")[0].text);
+                    dp[dr].x = Math.random();
+                    dp[dr].w = dp.screen.width;
+                    dp[dr].h = dp.screen.height;
+                    dp[dr].j = dp.innerHeight;
+                    dp[dr].e = dp.innerWidth;
+                    dp[dr].l = dp.location.href;
+                    dp[dr].r = dq.referrer;
+                    dp[dr].k = dp.screen.colorDepth;
+                    dp[dr].n = dq.characterSet;
+                    dp[dr].o = (new Date).getTimezoneOffset();
+                    if (dp.dataLayer)
+                        for (const dC of Object.entries(Object.entries(dataLayer).reduce(((dD, dE) => ({
+                                ...dD[1],
+                                ...dE[1]
+                            })), {}))) zaraz.set(dC[0], dC[1], {
+                            scope: "page"
+                        });
+                    dp[dr].q = [];
+                    for (; dp.zaraz.q.length;) {
+                        const dF = dp.zaraz.q.shift();
+                        dp[dr].q.push(dF)
+                    }
+                    dx.defer = !0;
+                    for (const dG of [localStorage, sessionStorage]) Object.keys(dG || {}).filter((dI => dI.startsWith("_zaraz_"))).forEach((dH => {
+                        try {
+                            dp[dr]["z_" + dH.slice(7)] = JSON.parse(dG.getItem(dH))
+                        } catch {
+                            dp[dr]["z_" + dH.slice(7)] = dG.getItem(dH)
+                        }
+                    }));
+                    dx.referrerPolicy = "origin";
+                    dx.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(dp[dr])));
+                    dw.parentNode.insertBefore(dx, dw)
+                };
+                ["complete", "interactive"].includes(dq.readyState) ? zaraz.init() : dp.addEventListener("DOMContentLoaded", zaraz.init)
+            }(w, d, "zarazData", "script");
+        })(window, document);
+    </script>
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+<body class="hold-transition login-page">
+    @yield('content')
 
-                    </ul>
+    <!--<script src="../../plugins/jquery/jquery.min.js"></script>-->
+    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+    <!--<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+    <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <!--<script src="../../dist/js/adminlte.min.js?v=3.2.0"></script>-->
+    <script src="{{asset('assets/dist/js/adminlte.min.js?v=3.2.0')}}"></script>
 </body>
+
 </html>
