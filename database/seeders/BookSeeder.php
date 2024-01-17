@@ -26,7 +26,7 @@ class BookSeeder extends Seeder
             $book->year = rand(2010, 2024);
             $book->publisher_id = rand(1, 20);
             $book->author_id = rand(1, 20);
-            $book->catalog_id = rand(1, 4);
+            $book->catalog_id = rand(1, 20);
             $book->qty = rand(2, 20);
             $book->price = rand(10000, 40000);
 

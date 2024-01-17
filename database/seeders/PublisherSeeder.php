@@ -18,7 +18,7 @@ class PublisherSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $publisher = new Publisher;
 
             $publisher->name = $faker->name;
