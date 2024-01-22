@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Publisher</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6"></div>
             </div><!-- /.row -->
@@ -18,7 +18,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Fixed Header Table</h3>
+                            <a href="{{ url('publishers/create') }}" class="btn btn-primary">Create New Publishers</a>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -37,17 +37,28 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Total Books</th>
-                                        <th class="text-center">Created At</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">phone_number</th>
+                                        <th class="text-center">Address</th>
+                                        <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forEach($catalogs as $key => $catalog)
+                                    @forEach($publishers as $key => $publisher)
                                     <tr>
-                                        <td class="text-center">{{$key++}}</td>
-                                        <td>{{$catalog->name}}</td>
-                                        <td class="text-center">{{ count($catalog->books) }}</td>
-                                        <td class="text-center">{{Date('H:i:s - d M Y', strtotime($catalog->created_at))}}</td>
+                                        <td class="text-center">{{$key+1}}</td>
+                                        <td>{{$publisher->name}}</td>
+                                        <td class="text-center">{{$publisher->email}}</td>
+                                        <td class="text-center">{{ $publisher->phone_number }}</td>
+                                        <td class="text-center">{{ $publisher->address }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ url('publishers/'.$publisher->id.'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="{{ url('publishers',['id' => $publisher->id]) }}" method="post">
+                                                <input class="btn btn-danger" href="" type="submit" value="delete" onclick="return confirm('Are you sure?')">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
