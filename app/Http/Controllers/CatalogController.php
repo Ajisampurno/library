@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class CatalogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $catalogs = Catalog::with('books')->get();
@@ -41,6 +46,7 @@ class CatalogController extends Controller
         $this->validate($request, [
             'name' => ['required']
         ]);
+
         $catalog->update($request->all());
         return Redirect('catalogs');
     }

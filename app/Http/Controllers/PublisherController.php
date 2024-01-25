@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class PublisherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $publishers = Publisher::all();
@@ -49,6 +54,6 @@ class PublisherController extends Controller
     public function destroy(Publisher $publisher)
     {
         $publisher->delete();
-        return Redirect('catalogs');
+        return Redirect('publishers');
     }
 }

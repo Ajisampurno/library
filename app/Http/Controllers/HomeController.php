@@ -146,7 +146,7 @@ class HomeController extends Controller
 
         //NO 18
         $data18 = Book::select('*')
-            ->where('price', 10000)
+            ->where('price', '>', 10000)
             ->get();
 
         //NO 19

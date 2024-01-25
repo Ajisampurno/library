@@ -221,6 +221,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <!--<script src="dist/js/adminlte.min.js"></script>-->
     <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+    <!-- Include Axios from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    @yield('js')
 </body>
 
 </html>
