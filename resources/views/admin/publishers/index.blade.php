@@ -1,7 +1,13 @@
 @extends('layouts.admin')
 
-@section('content')
+@section('css')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+@endsection
 
+@section('content')
 <div id="controller">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -10,35 +16,23 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Author</h1>
+                    <h1 class="m-0">Publishers</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6"></div>
             </div><!-- /.row -->
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                
-                                <!-- Button trigger modal -->
-                                <button @click="addData()" type="button" class="btn btn-primary">
-                                    Create New Author
-                                </button>
-    
-                                <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <!-- Button trigger modal -->
+                            <button @click="addData()" type="button" class="btn btn-primary">
+                                Create New Publisher
+                            </button>
                             </div>
-    
-                            <div class="card-body table-responsive p-0" style="height: 300px;">
-                                <table class="table table-head-fixed text-nowrap">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="data-table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
@@ -128,8 +122,42 @@
 </div>
 <!-- ./ Modal -->
 </div><!-- /controller -->
+@endsection
 
 @section('js')
+
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#data-table").DataTable({
+        "dom": 'Bfrtip',
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true,
+      "responsive": false,
+    })
+});
+</script>
+
+<!-- vue js -->
 <script>
     var controller = new Vue({
         el: '#controller',
@@ -171,7 +199,4 @@
         }
     });
 </script>
-@endsection
-
-
 @endsection

@@ -17,6 +17,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">-->
     <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
 
+    @yield('css')
+
     <!-- Theme style -->
     <!--<link rel="stylesheet" href="dist/css/adminlte.min.css">-->
     <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">

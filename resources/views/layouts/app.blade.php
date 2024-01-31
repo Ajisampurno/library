@@ -84,7 +84,7 @@
 
 <body class="hold-transition login-page">
     @yield('content')
-
+        
     <!--<script src="../../plugins/jquery/jquery.min.js"></script>-->
     <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
