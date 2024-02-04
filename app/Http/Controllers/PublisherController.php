@@ -15,13 +15,14 @@ class PublisherController extends Controller
 
     public function index()
     {
-        $publishers = Publisher::all();
-        return view('admin.publishers.index', compact('publishers'));
+        return view('admin.publishers.index');
     }
 
-    public function create()
+    public function api()
     {
-        return view('admin.publishers.create');
+        $publishers = Publisher::all();
+        $datatables = datatables()->of($publishers)->addIndexColumn();
+        return $datatables->make(true);
     }
 
     public function store(Request $request)
@@ -37,15 +38,14 @@ class PublisherController extends Controller
         return Redirect('publishers');
     }
 
-    public function edit(Publisher $publisher)
-    {
-        return view('admin.publishers.edit', compact('publisher'));
-    }
 
     public function update(Request $request, Publisher $publisher)
     {
         $this->validate($request, [
-            'name' => ['required']
+            'name' => ['required'],
+            'email' => ['required'],
+            'phone_number' => ['required'],
+            'address' => ['required'],
         ]);
         $publisher->update($request->all());
         return Redirect('publishers');
@@ -54,6 +54,6 @@ class PublisherController extends Controller
     public function destroy(Publisher $publisher)
     {
         $publisher->delete();
-        return Redirect('publishers');
+        return true;
     }
 }

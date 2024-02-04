@@ -15,7 +15,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">      
                             <!-- Button trigger modal -->
@@ -24,7 +24,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <table id="data-table" class="table table-responsive table-head-fixed text-nowrap">
+                            <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
@@ -35,21 +35,6 @@
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @forEach($authors as $key => $author)
-                                    <tr>
-                                        <td class="text-center">{{$key+1}}</td>
-                                        <td>{{$author->name}}</td>
-                                        <td class="text-center">{{$author->email}}</td>
-                                        <td class="text-center">{{ $author->phone_number }}</td>
-                                        <td class="text-center">{{ $author->address }}</td>
-                                        <td class="text-center">
-                                            <button @click="editData({{ $author }})" type="button" class="btn btn-warning">Edit</button>
-                                            <button @click="deleteData({{ $author->id }})" type="button" class="btn btn-danger">Delete</button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -71,7 +56,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-            <form :action="actionUrl" method="POST">
+            <form :action="actionUrl" method="POST" @submit="submitForm($event, data.id)">
                 <div class="modal-body">
                     @csrf
 
@@ -122,57 +107,25 @@
 <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
-<!-- Page specific script -->
+<!-- Table Column -->
 <script>
-  $(function () {
-    $("#data-table").DataTable({
-        "dom": 'Bfrtip',
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": true,
-      "responsive": false,
-    })
-});
-</script>
-
-<script>
-    var controller = new Vue({
-        el: '#controller',
-        data:{
-            data: {},
-            actionUrl: '{{ url('authors') }}',
-            editStatus: false
-        },
-        methods: {
-            addData() {
-                this.actionUrl = '{{ url('authors') }}';
-                this.editStatus = false;
-                $('#modal').modal();
-            },
-            editData(data) {
-                this.data = data;
-                this.actionUrl = '{{ url('authors') }}'+'/'+data.id;
-                this.editStatus = true;
-                $('#modal').modal();
-
-            },
-            deleteData(id) {
-
-                this.actionUrl = '{{ url('authors') }}'+'/'+id;
-
-                if (confirm("Are you sure??")) {
-                    axios
-                    .delete(this.actionUrl)
-                    .then(response => {location.reload();
-                        });
-                }
-            }
+    var actionUrl = '{{ url('authors') }}';
+    var apiUrl = '{{ url('api/authors') }}';
+    var columns = [
+        {data: 'DT_RowIndex', class: 'text-center', orderable: true},
+        {data: 'name', class: 'text-center', orderable: true},
+        {data: 'email', class: 'text-center', orderable: true},
+        {data: 'phone_number', class: 'text-center', orderable: true},
+        {data: 'address', class: 'text-center', orderable: true},
+        {render: function (index, row, data, meta){
+                return '<a href="#" class="btn btn-warning btn-sm" onclick="controller.editData(event, '+meta.row+')">Edit</a>'
+                +'<a href="#" class="btn btn-danger btn-sm" onclick="controller.deleteData(event, '+data.id+')">Delete</a>';
+            },orderable: false, width: '200px', class: 'text-center'
         }
-    });
+    ];
 </script>
+
+<!-- function CRUD axios -->
+<script src="{{ asset('js/data.js')}}"></script>
 @endsection
 

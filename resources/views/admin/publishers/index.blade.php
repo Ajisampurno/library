@@ -14,68 +14,35 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Publishers</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6"></div>
-            </div><!-- /.row -->
-
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header">      
                             <!-- Button trigger modal -->
                             <button @click="addData()" type="button" class="btn btn-primary">
                                 Create New Publisher
                             </button>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="data-table" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">#</th>
-                                            <th class="text-center">Name</th>
-                                            <th class="text-center">Email</th>
-                                            <th class="text-center">phone_number</th>
-                                            <th class="text-center">Address</th>
-                                            <th class="text-center">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forEach($publishers as $key => $publisher)
-                                        <tr>
-                                            <td class="text-center">{{$key+1}}</td>
-                                            <td>{{$publisher->name}}</td>
-                                            <td class="text-center">{{$publisher->email}}</td>
-                                            <td class="text-center">{{ $publisher->phone_number }}</td>
-                                            <td class="text-center">{{ $publisher->address }}</td>
-                                            <td class="text-center">
-                                                <button @click="editData({{ $publisher }})" type="button" class="btn btn-warning">Edit</button>
-                                                
-                                                <form action="{{ url('publishers',['id' => $publisher->id]) }}" method="post">
-                                                    <input class="btn btn-danger" href="" type="submit" value="delete" onclick="return confirm('Are you sure?')">
-                                                    @method('delete')
-                                                    @csrf
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-    
                         </div>
-    
+                        <div class="card-body">
+                            <table id="datatable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">phone_number</th>
+                                        <th class="text-center">Address</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-                </div><!-- /row -->
-                
-            </div><!-- /.container-fluid -->
+                </div>
+            </div><!-- /row -->
+        </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
-    
-    
+    <!-- /.content-header -->   
 </div>
 <!-- /.content-wrapper -->
 
@@ -89,7 +56,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-            <form :action="actionUrl" method="POST">
+            <form :action="actionUrl" method="POST" @submit="submitForm($event, data.id)">
                 <div class="modal-body">
                     @csrf
 
@@ -122,6 +89,7 @@
 </div>
 <!-- ./ Modal -->
 </div><!-- /controller -->
+
 @endsection
 
 @section('js')
@@ -140,63 +108,27 @@
 <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
-<!-- Page specific script -->
+<!-- Table Column -->
 <script>
-  $(function () {
-    $("#data-table").DataTable({
-        "dom": 'Bfrtip',
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": true,
-      "responsive": false,
-    })
-});
-</script>
+    var actionUrl = '{{ url('publishers') }}';
+    var apiUrl = '{{ url('api/publishers') }}';
 
-<!-- vue js -->
-<script>
-    var controller = new Vue({
-        el: '#controller',
-        data:{
-            data: {},
-            actionUrl: '{{ url('publishers') }}',
-            editStatus: false
-        },
-        methods: {
-            addData() {
-                this.actionUrl = '{{ url('publishers') }}';
-                this.editStatus = false;
-                $('#modal').modal();
-            },
-            editData(data) {
-                this.data = data;
-                this.actionUrl = '{{ url('publishers') }}'+'/'+data.id;
-                this.editStatus = true;
-                $('#modal').modal();
-
-            },
-            deleteData(id) {
-
-                this.actionUrl = '{{ url('publishers') }}'+'/'+id;
-
-                if (confirm("Anda benar-benar ingin menghapus??")) {
-                    axios
-                    .delete(this.actionUrl)
-                    .then(response => {
-                            // Lakukan apa yang diperlukan setelah penghapusan berhasil
-                            window.location.reload();
-                        })
-                    .catch(error => {
-                            console.error('Error:', error);
-                            // Tampilkan pesan kesalahan atau tangani kesalahan sesuai kebutuhan Anda
-                        });
-                }
-            }
+    var columns = [
+        {data: 'DT_RowIndex', class: 'text-center', orderable: true},
+        {data: 'name', class: 'text-center', orderable: true},
+        {data: 'email', class: 'text-center', orderable: true},
+        {data: 'phone_number', class: 'text-center', orderable: true},
+        {data: 'address', class: 'text-center', orderable: true},
+        {render: function (index, row, data, meta){
+                return '<a href="#" class="btn btn-warning btn-sm" onclick="controller.editData(event, '+meta.row+')">Edit</a>'
+                +' <a href="#" class="btn btn-danger btn-sm" onclick="controller.deleteData(event, '+data.id+')">Delete</a>';
+            },orderable: false, width: '200px', class: 'text-center'
         }
-    });
+    ];
 </script>
+
+<!-- function CRUD axios -->
+<script src="{{ asset('js/data.js')}}"></script>
+
 @endsection
+
