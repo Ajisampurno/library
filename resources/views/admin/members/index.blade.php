@@ -33,6 +33,7 @@
                                         <th class="text-center">phone_number</th>
                                         <th class="text-center">Address</th>
                                         <th class="text-center">email</th>
+                                        <th class="text-center">Cretaed_at</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -135,6 +136,7 @@
         {data: 'phone_number', class: 'text-center', orderable: true},
         {data: 'address', class: 'text-center', orderable: true},
         {data: 'email', class: 'text-center', orderable: true},
+        {data: 'date', class: 'text-center', orderable: true},
         {render: function (index, row, data, meta){
                 return '<a href="#" class="btn btn-warning btn-sm" onclick="controller.editData(event, '+meta.row+')">Edit</a>'
                 +' <a href="#" class="btn btn-danger btn-sm" onclick="controller.deleteData(event, '+data.id+')">Delete</a>';
