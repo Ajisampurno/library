@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
 
 //Route::get('/catalogs', [App\Http\Controllers\CatalogController::class, 'index']);
 //Route::get('/catalogs/create', [App\Http\Controllers\CatalogController::class, 'create']);
@@ -28,7 +28,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Route::put('/catalogs/{catalog}', [App\Http\Controllers\CatalogController::class, 'update']);
 //Route::delete('/catalogs/{catalog}', [App\Http\Controllers\CatalogController::class, 'destroy']);
 
-Route::resource('/catalogs', App\Http\Controllers\CatalogController::class);
 
 //Route::get('/publishers', [App\Http\Controllers\PublisherController::class, 'index']);
 //Route::get('/publishers/create', [App\Http\Controllers\PublisherController::class, 'create']);
@@ -37,6 +36,7 @@ Route::resource('/catalogs', App\Http\Controllers\CatalogController::class);
 //Route::put('/publishers/{publisher}', [App\Http\Controllers\PublisherController::class, 'update']);
 //Route::delete('/publishers/{publisher}', [App\Http\Controllers\PublisherController::class, 'destroy']);
 
+Route::resource('/catalogs', App\Http\Controllers\CatalogController::class);
 Route::resource('/books', App\Http\Controllers\BookController::class);
 Route::resource('/members', App\Http\Controllers\MemberController::class);
 Route::resource('/publishers', App\Http\Controllers\PublisherController::class);

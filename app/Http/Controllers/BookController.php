@@ -41,6 +41,22 @@ class BookController extends Controller
         return Redirect('books');
     }
 
+    public function update(Request $request, Book $book)
+    {
+        $this->validate($request, [
+            'isbn' => ['required'],
+            'title' => ['required'],
+            'year' => ['required'],
+            'publisher_id' => ['required'],
+            'author_id' => ['required'],
+            'catalog_id' => ['required'],
+            'qty' => ['required'],
+            'price' => ['required'],
+        ]);
+        $book->update($request->all());
+        return Redirect('books');
+    }
+
     public function api()
     {
         $books = Book::all();

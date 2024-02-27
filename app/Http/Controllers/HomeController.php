@@ -3,14 +3,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
+use DB;
 use App\Models\Book;
-use App\Models\Catalog;
+use App\Models\User;
+use App\Models\Author;
 use App\Models\Member;
+use App\Models\Catalog;
 use App\Models\Publisher;
 use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class HomeController extends Controller
 {
@@ -161,6 +163,32 @@ class HomeController extends Controller
             ->get();
 
         return $data20;
-        return view('home');
+    }
+
+    public function dashboard()
+    {
+        $tbook = Book::count();
+        $tmember = Member::count();
+        $ttransaction = Transaction::count();
+        $tpublisher = Publisher::count();
+
+        $data_donut = Book::select(Book::raw('COUNT(publisher_id) as total'))
+            ->groupBy('publisher_id')
+            ->get()
+            ->pluck('total');
+        $data_pie = Book::select(Book::raw('COUNT(catalog_id) as total'))
+            ->groupBy('publisher_id')
+            ->get()
+            ->pluck('total');
+
+        $lable_donut = Publisher::pluck('name')->toArray();
+        $lable_pie = Catalog::pluck('name')->toArray();
+
+        foreach (range(1, 12) as $month) {
+            $data_monthstart[] = Transaction::whereMonth('date_start', $month)->count();
+            $data_monthend[] = Transaction::whereMonth('date_end', $month)->count();
+        };
+
+        return view('home', compact('tbook', 'tmember', 'ttransaction', 'tpublisher', 'data_donut', 'lable_donut', 'data_pie', 'lable_pie', 'data_monthstart', 'data_monthend', 'data_pie'));
     }
 }

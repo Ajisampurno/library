@@ -7,7 +7,6 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
-                <h5 class="mb-2">Book</h5>
                 
                 <div class="row justify-content-center mt-3">
                     <div class="col-md-6 col-sm-12">
@@ -26,7 +25,7 @@
 
                 <div class="row">
                     <div v-for="book in filteredList" class="col-md-3 col-sm-6 col-12">
-                        <div class="info-box" v-on:click="editData(book)">
+                        <div class="info-box" v-on:click="editData(event,book)">
                             <div class="info-box-content">
                                 <span class="info-box-text">@{{ book.title }} (@{{ book.qty }})</span>
                                 <span class="info-box-number">@{{formatRupiah(book.price) }}</span>
@@ -43,7 +42,6 @@
         <!-- /.content-header -->
     </div>
     <!-- /.content-wrapper -->
-
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -79,7 +77,7 @@
                             <label>Publisher</label>
                             <select class="form-control" name="publisher_id">
                                 @foreach ($publishers as $publisher)
-                                <option :selected="book.publisher_id == {{ $publisher->id }}" value="1">{{ $publisher->name }}</option>
+                                <option :selected="book.publisher_id == {{ $publisher->id }}" value="{{ $publisher->id }}">{{ $publisher->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -112,18 +110,15 @@
                             <input name="price" type="number" class="form-control" id="price" :value="book.price" required>
                         </div>
 
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" v-if="editStatus" v-on:click="deleteData(event, book.id)">Delete</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" v-if="editStatus" v-on:click="deleteData(event, book.id)">Delete</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                 </form>
             </div>
         </div>
     </div>
-<!-- ./ Modal -->
-
+    <!-- ./ Modal -->
 </div>
 <!-- /#controller -->
 @endsection
@@ -136,10 +131,12 @@
     var controller = new Vue({
         el: '#controller',
         data:{
+            actionUrl,
+            apiUrl,
             books:[],
+            book: {},
             searchQuery: '',
-            editStatus: false,
-            book: {}
+            editStatus: false
         },
         mounted: function(){
             this.get_books();
@@ -167,14 +164,14 @@
                 this.book = {};
                 $('#modal').modal();
             },
-            editData(book){
+            editData(event,book){
                 this.editStatus = true;
                 this.book = book;
                 $('#modal').modal();
             },
             deleteData(event, id){ 
                 axios
-                .delete('{{ url('books') }}/'+id)
+                .delete(this.actionUrl+'/'+id)
                 .then(response => {
                     $('#modal').modal('hide');
                     this.get_books();
