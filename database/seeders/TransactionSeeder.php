@@ -18,12 +18,13 @@ class TransactionSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $transaction = new Transaction;
 
-            $transaction->member_id = rand(1, 20);
+            $transaction->member_id = 1;
             $transaction->date_start = $faker->date;
             $transaction->date_end = $faker->date;
+            $transaction->status = $faker->randomElement(['Finished', 'Borrowed']);
 
             $transaction->save();
         }

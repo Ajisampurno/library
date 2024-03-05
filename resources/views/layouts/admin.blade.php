@@ -61,25 +61,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <span class="badge badge-warning navbar-badge">{{ $notifs->count() }}</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-header">15 Notifications</span>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="width:500px;">
+                        <span class="dropdown-header">{{ $notifs->count() }} Notifications</span>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 8 friend requests
-                            <span class="float-right text-muted text-sm">12 hours</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
+                        <div class="table-responsive" style="max-height:200px;">
+                            @foreach ($notifs as $notif)
+                                <a href="{{ url('transactions/'.$notif->id.'/show') }}" class="dropdown-item">
+                                    <i class="fas fa-envelope mr-2"></i> {{ $notif->name }}, 
+                                    <span class="text-muted text-sm">lewati batas waktu {{ $notif->hari }} hari</span>
+                                </a>
+                            @endforeach
+                        </div>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
@@ -145,6 +139,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>
                                     Home
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('transactions')}}" class="nav-link {{request()->is('transaction') ? 'active' :''}}">
+                                <i class="nav-icon fas fa-plus-square"></i>
+                                <p>
+                                    Transaction
                                 </p>
                             </a>
                         </li>

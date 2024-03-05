@@ -14,7 +14,8 @@ class AuthorController extends Controller
 
     public function index()
     {
-        return view('admin.authors.index');
+        $notifs = Controller::getNotif();
+        return view('admin.authors.index', compact('notifs'));
     }
 
     public function api()

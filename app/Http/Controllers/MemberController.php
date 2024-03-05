@@ -13,19 +13,28 @@ class MemberController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.members.index');
+        $notifs = Controller::getNotif();
+        return view('admin.members.index', compact('notifs'));
     }
 
-    public function api()
+
+
+    public function api(Request $request)
     {
-        $members = Member::all();
+        if ($request->gender) {
+            $members = Member::where('gender', $request->gender)->get();
+        } else {
+            $members = Member::all();
+        }
+
         $datatables = datatables()->of($members)
-            ->addColumn('date', function ($author) {
-                return convert_date($author->created_at);
+            ->addColumn('date', function ($member) {
+                return convert_date($member->created_at);
             })
             ->addIndexColumn();
+
         return $datatables->make(true);
     }
 

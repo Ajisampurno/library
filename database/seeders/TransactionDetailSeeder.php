@@ -18,12 +18,12 @@ class TransactionDetailSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $transactionDetail = new TransactionDetail;
 
-            $transactionDetail->transaction_id = rand(1, 20);
-            $transactionDetail->book_id = rand(1, 20);
-            $transactionDetail->qty = rand(1, 6);
+            $transactionDetail->transaction_id = 1;
+            $transactionDetail->book_id = 1;
+            $transactionDetail->qty = 1;
 
             $transactionDetail->save();
         }

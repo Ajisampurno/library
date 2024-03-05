@@ -18,10 +18,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">      
-                            <!-- Button trigger modal -->
-                            <button @click="addData()" type="button" class="btn btn-primary">
-                                Create New Member
-                            </button>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <!-- Button trigger modal -->
+                                    <button @click="addData()" type="button" class="btn btn-primary">
+                                        Create New Member
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-control" name="gender">
+                                        <option value="0">Semua jenis kelamin</option>
+                                        <option value="l">laki-laki</option>
+                                        <option value="p">perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="card-body">
                             <table id="datatable" class="table table-bordered table-striped">
@@ -147,6 +159,18 @@
 
 <!-- function CRUD axios -->
 <script src="{{ asset('js/data.js')}}"></script>
+<!-- function filter -->
+<script>
+    $('select[name=gender]').on('change', function(){
+        gender = $('select[name=gender]').val();
+
+        if(gender == 0){
+            controller.table.ajax.url(apiUrl).load();
+        }else{
+            controller.table.ajax.url(apiUrl+'?gender='+gender).load();
+        }
+    });
+</script>
 
 @endsection
 

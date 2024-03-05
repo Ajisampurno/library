@@ -44,6 +44,7 @@ var controller = new Vue({
 
         },
         deleteData(event, id) {
+
             if (confirm("Are you sure??")) {
                 $(event.target).parent('tr').remove();
                 axios
@@ -51,6 +52,8 @@ var controller = new Vue({
                 .then(response => {
                     alert('data berhasil di hapus')
                 this.table.ajax.reload();
+                }).catch((error) => {
+                    console.error('error Bos:', error);
                 });
             }
         },

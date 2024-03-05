@@ -16,14 +16,16 @@ class CatalogController extends Controller
 
     public function index()
     {
+        $notifs = Controller::getNotif();
         $catalogs = Catalog::with('books')->get();
 
-        return view('admin.catalogs.index', compact('catalogs'));
+        return view('admin.catalogs.index', compact('notifs', 'catalogs'));
     }
 
     public function create()
     {
-        return view('admin.catalogs.create');
+        $notifs = Controller::getNotif();
+        return view('admin.catalogs.create', compact('notifs'));
     }
 
     public function store(Request $request)
@@ -38,7 +40,8 @@ class CatalogController extends Controller
 
     public function edit(Catalog $catalog)
     {
-        return view('admin.catalogs.edit', compact('catalog'));
+        $notifs = Controller::getNotif();
+        return view('admin.catalogs.edit', compact('notifs', 'catalog'));
     }
 
     public function update(Request $request, Catalog $catalog)

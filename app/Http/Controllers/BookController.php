@@ -18,11 +18,12 @@ class BookController extends Controller
 
     public function index()
     {
+        $notifs = Controller::getNotif();
         $publishers = Publisher::all();
         $authors = Author::all();
         $catalogs = Catalog::all();
 
-        return view('admin.books.index', compact('publishers', 'authors', 'catalogs'));
+        return view('admin.books.index', compact('notifs', 'publishers', 'authors', 'catalogs'));
     }
 
     public function store(Request $request)
