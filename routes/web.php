@@ -43,6 +43,8 @@ Route::resource('/members', App\Http\Controllers\MemberController::class);
 Route::resource('/publishers', App\Http\Controllers\PublisherController::class);
 Route::resource('/authors', App\Http\Controllers\AuthorController::class);
 
+Route::get('test_spatie', [App\Http\Controllers\Controller::class, 'run']);
+
 Route::get('/api/books', [App\Http\Controllers\BookController::class, 'api']);
 Route::get('/api/transactions', [App\Http\Controllers\TransactionController::class, 'api']);
 Route::get('/api/members', [App\Http\Controllers\MemberController::class, 'api']);
