@@ -16,12 +16,8 @@ class CatalogController extends Controller
 
     public function index()
     {
-        if (auth()->user()->role('admin')) {
-            # code...
-            $notifs = Controller::getNotif();
-            $catalogs = Catalog::with('books')->get();
-        }
-
+        $notifs = Controller::getNotif();
+        $catalogs = Catalog::with('books')->get();
         return view('admin.catalogs.index', compact('notifs', 'catalogs'));
     }
 
