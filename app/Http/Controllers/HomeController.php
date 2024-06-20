@@ -6,10 +6,15 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 
 use App\Models\Book;
+use App\Models\City;
+use App\Models\Kota;
 use App\Models\User;
+use App\Models\Orang;
 use App\Models\Author;
 use App\Models\Member;
+use App\Models\Person;
 use App\Models\Catalog;
+use App\Models\Welcome;
 use App\Models\Publisher;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
